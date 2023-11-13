@@ -12,8 +12,14 @@ public class DemoApplication {
 
         SpringApplication.run(DemoApplication.class, args);
         HelloWorldServer server = new HelloWorldServer();
-        server.start();
-        server.blockUntilShutdown();
+        new Thread(() -> {
+            try {
+                server.start();
+                server.blockUntilShutdown();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
 }

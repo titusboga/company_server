@@ -23,10 +23,4 @@ public class HelloWorldServer {
         server.awaitTermination();
     }
 
-    public static void main(String[] args)
-            throws InterruptedException, IOException {
-        HelloWorldServer server = new HelloWorldServer();
-        server.start();
-        server.blockUntilShutdown();
-    }
 }
