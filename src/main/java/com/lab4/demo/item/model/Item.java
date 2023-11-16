@@ -1,6 +1,5 @@
 package com.lab4.demo.item.model;
 
-import com.lab4.demo.review.model.Review;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,7 +28,4 @@ public class Item {
     @Column
     private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "item")
-    @Builder.Default
-    private Set<Review> reviews = new HashSet<>();
 }

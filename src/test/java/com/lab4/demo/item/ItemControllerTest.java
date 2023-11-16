@@ -5,11 +5,6 @@ import com.lab4.demo.TestCreationFactory;
 import com.lab4.demo.item.model.Item;
 import com.lab4.demo.item.model.dto.ItemDTO;
 import com.lab4.demo.item.model.dto.ItemFilterRequestDto;
-import com.lab4.demo.report.CSVReportService;
-import com.lab4.demo.report.PdfReportService;
-import com.lab4.demo.report.ReportServiceFactory;
-import com.lab4.demo.review.ReviewService;
-import com.lab4.demo.review.model.dto.ReviewDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,8 +24,6 @@ import java.util.Set;
 
 import static com.lab4.demo.TestCreationFactory.*;
 import static com.lab4.demo.UrlMapping.*;
-import static com.lab4.demo.report.ReportType.CSV;
-import static com.lab4.demo.report.ReportType.PDF;
 import static org.mockito.Mockito.*;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,26 +38,6 @@ class ItemControllerTest extends BaseControllerTest {
     @Mock
     private ItemService itemService;
 
-    @Mock
-    private ReportServiceFactory reportServiceFactory;
-
-    @Mock
-    private CSVReportService csvReportService;
-
-    @Mock
-    private PdfReportService pdfReportService;
-
-    @Mock
-    private ReviewService reviewService;
-
-    @BeforeEach
-    protected void setUp() {
-        super.setUp();
-        controller = new ItemController(itemService, reportServiceFactory, reviewService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller)
-                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-                .build();
-    }
 
     @Test
     void allItems() throws Exception {
@@ -75,25 +48,6 @@ class ItemControllerTest extends BaseControllerTest {
 
         response.andExpect(status().isOk())
                 .andExpect(jsonContentToBe(items));
-
-    }
-
-    @Test
-    void exportReport() throws Exception {
-        when(reportServiceFactory.getReportService(PDF)).thenReturn(pdfReportService);
-        when(reportServiceFactory.getReportService(CSV)).thenReturn(csvReportService);
-        String pdfResponse = "PDF!";
-        when(pdfReportService.export()).thenReturn(pdfResponse);
-        String csvResponse = "CSV!";
-        when(csvReportService.export()).thenReturn(csvResponse);
-
-        ResultActions pdfExport = mockMvc.perform(get(ITEMS + EXPORT_REPORT, PDF.name()));
-        ResultActions csvExport = mockMvc.perform(get(ITEMS + EXPORT_REPORT, CSV.name()));
-
-        pdfExport.andExpect(status().isOk())
-                .andExpect(content().string(pdfResponse));
-        csvExport.andExpect(status().isOk())
-                .andExpect(content().string(csvResponse));
 
     }
 
@@ -170,38 +124,4 @@ class ItemControllerTest extends BaseControllerTest {
 
     }
 
-    @Test
-    void reviewsForItem() throws Exception {
-        long id = randomLong();
-        Set<ReviewDTO> reviewDTOs = new HashSet<>(listOf(ReviewDTO.class));
-
-        when(reviewService.getReviewsForItem(id)).thenReturn(reviewDTOs);
-
-        ResultActions result = performGetWithPathVariable(ITEMS + ENTITY + REVIEWS, id);
-        result.andExpect(status().isOk())
-                .andExpect(jsonContentToBe(reviewDTOs));
-    }
-
-    @Test
-    void filteredItems() throws Exception {
-        String nameFilter = "name filter";
-        ItemFilterRequestDto filters = ItemFilterRequestDto.builder()
-                .onlyExcellent(true)
-                .name(nameFilter)
-                .build();
-
-        final int sortedPage = 4;
-        final int sortedPageSize = 100;
-        final String sortColumn = "dateCreated";
-        final PageRequest pagination = PageRequest.of(sortedPage, sortedPageSize, Sort.by(ASC, sortColumn));
-
-        Page<ItemDTO> items = new PageImpl<>(listOf(ItemDTO.class));
-        when(itemService.findAllFiltered(filters, pagination)).thenReturn(items);
-
-        ResultActions result = performGetWithModelAttributeAndParams(ITEMS + FILTERED, Pair.of("filter", filters), pairsFromPagination(pagination));
-
-        verify(itemService, times(1)).findAllFiltered(filters, pagination);
-        result.andExpect(status().isOk())
-                .andExpect(jsonContentToBe(items));
-    }
 }

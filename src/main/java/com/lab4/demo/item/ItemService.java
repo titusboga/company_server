@@ -61,9 +61,4 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public Page<ItemDTO> findAllFiltered(ItemFilterRequestDto filter, Pageable pageable) {
-        return itemRepository.findAll(
-                ItemSpecifications.specificationsFromFilter(filter), pageable
-        ).map(itemMapper::toDto);
-    }
 }

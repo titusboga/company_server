@@ -4,6 +4,8 @@ package company;
 
 service HelloWorldService {
   rpc hello(HelloRequest) returns (HelloResponse) {}
+  rpc login(LoginRequest) returns (LoginResponse) {}
+  rpc register(RegisterRequest) returns (RegisterRequest) {}
 }
 
 message HelloRequest {
@@ -12,4 +14,36 @@ message HelloRequest {
 
 message HelloResponse {
   string text = 1;
+}
+
+message LoginRequest {
+  oneof credential {
+    string email = 1;
+    string username = 2;
+  }
+  string password = 3;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message LoginResponse {
+  enum Status {
+    SUCCESS = 0;
+    FAILURE = 1;
+  }
+  Status status = 1;
+  string message = 2; // This can contain error message or success confirmation
+}
+
+message RegisterResponse {
+  enum Status {
+    SUCCESS = 0;
+    FAILURE = 1;
+  }
+  Status status = 1;
+  string message = 2; // This can contain error message or success confirmation
 }

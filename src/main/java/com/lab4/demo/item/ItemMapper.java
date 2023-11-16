@@ -11,9 +11,6 @@ public interface ItemMapper {
 
     ItemDTO toDto(Item item);
 
-    @Mappings({
-            @Mapping(target = "reviews", ignore = true)
-    })
     Item fromDto(ItemDTO item);
 
 }

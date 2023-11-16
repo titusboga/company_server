@@ -1,8 +1,6 @@
 package com.lab4.demo;
 
 import com.lab4.demo.item.ItemRepository;
-import com.lab4.demo.security.AuthService;
-import com.lab4.demo.security.dto.SignupRequest;
 import com.lab4.demo.user.RoleRepository;
 import com.lab4.demo.user.UserRepository;
 import com.lab4.demo.user.model.ERole;
@@ -23,7 +21,6 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
 
     private final UserRepository userRepository;
 
-    private final AuthService authService;
 
     private final ItemRepository itemRepository;
 
@@ -43,18 +40,6 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                                 .build()
                 );
             }
-            authService.register(SignupRequest.builder()
-                    .email("alex@email.com")
-                    .username("alex")
-                    .password("WooHoo1!")
-                    .roles(Set.of("ADMIN"))
-                    .build());
-            authService.register(SignupRequest.builder()
-                    .email("alex1@email.com")
-                    .username("alex1")
-                    .password("WooHoo1!")
-                    .roles(Set.of("CUSTOMER"))
-                    .build());
         }
     }
 }
