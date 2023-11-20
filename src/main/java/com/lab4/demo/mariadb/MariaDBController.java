@@ -1,10 +1,15 @@
 package com.lab4.demo.mariadb;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+@RestController
+@RequiredArgsConstructor
 public class MariaDBController {
 
     String dockerComposeFilePath = "/Users/titusboga/Desktop/Development/server/backend/src/main/java/com/lab4/demo/mariadb/docker-compose-mariadb.yml";

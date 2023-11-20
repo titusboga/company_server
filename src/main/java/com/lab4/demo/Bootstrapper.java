@@ -1,10 +1,9 @@
 package com.lab4.demo;
 
 import com.lab4.demo.item.ItemRepository;
-import com.lab4.demo.user.RoleRepository;
+
 import com.lab4.demo.user.UserRepository;
-import com.lab4.demo.user.model.ERole;
-import com.lab4.demo.user.model.Role;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -17,7 +16,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> {
 
-    private final RoleRepository roleRepository;
+  //  private final RoleRepository roleRepository;
 
     private final UserRepository userRepository;
 
@@ -32,14 +31,14 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
         if (bootstrap) {
             itemRepository.deleteAll();
             userRepository.deleteAll();
-            roleRepository.deleteAll();
+         /*   roleRepository.deleteAll();
             for (ERole value : ERole.values()) {
                 roleRepository.save(
                         Role.builder()
                                 .name(value)
                                 .build()
                 );
-            }
+            }*/
         }
     }
 }

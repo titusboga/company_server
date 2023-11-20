@@ -2,7 +2,6 @@ package com.lab4.demo.item;
 
 import com.lab4.demo.item.model.Item;
 import com.lab4.demo.item.model.dto.ItemFilterRequestDto;
-import com.lab4.demo.user.model.ERole;
 import com.lab4.demo.user.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
