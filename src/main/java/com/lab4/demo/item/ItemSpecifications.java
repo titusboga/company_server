@@ -5,7 +5,6 @@ import com.lab4.demo.item.model.dto.ItemFilterRequestDto;
 import com.lab4.demo.user.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 
 import static java.util.Optional.ofNullable;

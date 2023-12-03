@@ -3,12 +3,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:latest.release'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
     }
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.4.3'
+    id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -28,7 +28,7 @@ sourceSets {
 
 group = 'com.lab4'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -45,28 +45,32 @@ dependencies {
     repositories {
         mavenCentral()
     }
-    compile "io.grpc:grpc-netty:${grpcVersion}"
-    compile "io.grpc:grpc-protobuf:${grpcVersion}"
-    compile "io.grpc:grpc-stub:${grpcVersion}"
-    compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.12.2'
+    //   compile "io.grpc:grpc-netty:${grpcVersion}"
+    //  compile "io.grpc:grpc-protobuf:${grpcVersion}"
+    //  compile "io.grpc:grpc-stub:${grpcVersion}"
+    //  compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.12.2'
+    implementation "io.grpc:grpc-netty:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation 'com.google.protobuf:protobuf-java-util:3.12.2'
 
     compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
     compileOnly group: "org.jetbrains", name: "annotations", version: "13.0"
 
-    implementation 'io.grpc:grpc-netty:1.40.1'
-    implementation 'io.grpc:grpc-protobuf:1.40.1'
-    implementation 'io.grpc:grpc-stub:1.40.1'
+   // implementation 'io.grpc:grpc-netty:1.40.1'
+   // implementation 'io.grpc:grpc-protobuf:1.40.1'
+   // implementation 'io.grpc:grpc-stub:1.40.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.8.0'
 
-
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.2.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.9.RELEASE'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'

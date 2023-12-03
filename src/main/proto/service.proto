@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package company;
+
+// ServiceAction enum defines the type of action to be performed on the service.
+enum ServiceAction {
+  UNKNOWN = 0;
+  CREATE = 1;
+  DELETE = 2;
+  START = 3;
+  STOP = 4;
+}
+
+// ServiceRequest message is used by the client to request a service action.
+message ServiceRequest {
+  string service_id = 1;         // Unique identifier for the service.
+  ServiceAction action = 2;      // Action to be performed on the service.
+}
+
+// OperationStatus enum defines possible outcomes of the requested operation.
+enum OperationStatus {
+  STATUS_UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+  NOT_FOUND = 3;
+  ALREADY_EXISTS = 4;
+  INVALID_OPERATION = 5;
+}
+
+// ServiceResponse message is used by the server to respond to the client.
+message ServiceResponse {
+  OperationStatus status = 1;    // The outcome of the operation.
+  string message = 2;            // Additional information about the outcome.
+}

@@ -1,8 +1,8 @@
 package com.lab4.demo.user.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
 @Entity
 @Builder
